@@ -1,6 +1,6 @@
 # Filament Navigation Footer Menu
 
-A **Filament v5** panel plugin that adds a **configurable footer navigation block** to your panel:
+A **Filament v4, v5** panel plugin that adds a **configurable footer navigation block** to your panel:
 
 - **Sidebar mode** (default navigation): a **collapsible group** at the bottom of the sidebar, aligned with Filament’s native navigation styling. Items expand **upward** so the trigger stays at the bottom (useful above the user area).
 - **Top navigation mode** (`$panel->topNavigation()`): a **compact icon trigger** with a **dropdown** menu, placed in the top bar with correct spacing next to the user menu.
@@ -11,11 +11,11 @@ Styling uses Filament’s own components and CSS tokens, so **light/dark mode** 
 
 ## Requirements
 
-| Requirement | Version |
-|-------------|---------|
-| PHP | `^8.2` |
+| Requirement | Version                       |
+|-------------|-------------------------------|
+| PHP | `^8.2`                        |
 | Laravel (illuminate components) | `^11.0` \| `^12.0` \| `^13.0` |
-| Filament | `^5.0` |
+| Filament | `^4.0` \| `^5.0`              |
 
 ---
 
