@@ -1,6 +1,6 @@
 {
     "name": "cyberline/filament-navigation-footermenu",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Configurable footer navigation for Filament v4, v5: collapsible sidebar group and topbar dropdown (dark mode ready).",
     "type": "library",
     "license": "MIT",
