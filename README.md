@@ -285,9 +285,46 @@ Publish if you need to override strings per app.
 
 ## Tailwind / Vite (Filament theme)
 
-If you customize Filament’s Vite theme, ensure paths that scan Blade **include** this package’s views (or your published copies), so Tailwind does not purge rarely used classes.
+This package’s Blade views use **Tailwind utility classes** (for example `px-6`, `pb-3`, `flex`) alongside Filament’s `fi-*` classes. Filament’s **default pre-built panel CSS** is compiled from Filament’s own sources only; it does **not** scan `vendor/cyberline/filament-navigation-footermenu`, so those utilities may be **missing** in the browser unless your app compiles a **custom Filament theme** that includes this package in Tailwind’s content scan.
 
-Typical Filament theme `content` entries include `vendor/filament/**/*.blade.php`; confirm your setup includes vendor Blade paths you rely on.
+### Required steps (Filament v4+ with Vite)
+
+1. **Create a panel theme CSS file** (e.g. `resources/css/filament/{panel-id}/theme.css`). The Filament stub pattern is:
+
+   ```css
+   @import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+   @source '../../../../app/Filament/**/*';
+   @source '../../../../resources/views/filament/**/*';
+   @source '../../../../vendor/cyberline/filament-navigation-footermenu/resources/views/**/*.blade.php';
+   ```
+
+   Adjust relative paths if your file lives elsewhere.
+
+2. **Register the theme** on your panel in `PanelProvider`:
+
+   ```php
+   return $panel
+       ->viteTheme('resources/css/filament/admin/theme.css'); // path to your theme.css
+   ```
+
+3. **Add the theme to Vite** in `vite.config.js` (Laravel Vite `input` array) so it is built with `npm run build` / `npm run dev`.
+
+4. **Rebuild assets** after upgrading this package, editing its views, or changing Tailwind classes in the theme (`npm run build`, or keep `npm run dev` running).
+
+### If you publish views
+
+After `php artisan vendor:publish --tag=filament-navigation-footermenu-views`, add an `@source` line for your app copy so Tailwind scans the published blades, for example:
+
+```css
+@source '../../../../resources/views/vendor/filament-navigation-footermenu/**/*.blade.php';
+```
+
+You can keep or remove the vendor `@source` depending on whether you still load views from the package.
+
+### Optional: avoid a custom theme
+
+You can avoid relying on extra Tailwind utilities by using **only** Filament’s documented `fi-*` patterns and inline styles the default bundle already includes, or by shipping a tiny **non-Tailwind** CSS file — but the default package views expect a theme build that scans them as above.
 
 ---
 
